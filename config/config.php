@@ -10,7 +10,7 @@ define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Application Configuration
-define('BASE_URL', 'http://localhost/salon');
+define('BASE_URL', 'http://localhost/favio-claude');
 define('UPLOAD_PATH', __DIR__ . '/../uploads/');
 define('LOGO_PATH', UPLOAD_PATH . 'logos/');
 

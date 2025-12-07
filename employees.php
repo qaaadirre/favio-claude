@@ -28,6 +28,7 @@ if ($auth->isOwner()) {
 }
 
 $csrfToken = $auth->generateCsrfToken();
+$currentPage = 'employees';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,9 @@ $csrfToken = $auth->generateCsrfToken();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees - Salon Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        <?php include 'assets/css/main-style.css'; ?>
+    </style>
 </head>
 <body>
     <div class="container">
@@ -130,12 +133,10 @@ $csrfToken = $auth->generateCsrfToken();
                 <?php else: ?>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px;">
                     <?php foreach ($employees as $emp): 
-                        // Get pending deductions
                         $sql = "SELECT COALESCE(SUM(amount), 0) as total FROM deductions WHERE employee_id = ? AND is_repaid = 0";
                         $deductions = $db->selectOne($sql, [$emp['id']]);
                         $pendingAmount = $deductions['total'];
                         
-                        // Get this month tasks
                         $sql = "SELECT COUNT(*) as total FROM tasks WHERE employee_id = ? AND MONTH(date) = MONTH(CURDATE()) AND YEAR(date) = YEAR(CURDATE())";
                         $tasks = $db->selectOne($sql, [$emp['id']]);
                         $monthlyTasks = $tasks['total'];
